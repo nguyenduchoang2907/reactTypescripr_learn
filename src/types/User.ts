@@ -61,20 +61,36 @@ export interface responsePasswordReset {
   message: string;
 }
 //resetPassword
-export interface resetPasswordRequest{
-    token:string;
-    newPassword:string;
+export interface resetPasswordRequest {
+  token: string;
+  newPassword: string;
 }
-export interface resetPasswordResponse{
-    message:string;
+export interface resetPasswordResponse {
+  message: string;
 }
 
 //updatePassword after login
-export interface updatePasswordRequest{
-    oldPassword:string;
-    newPassword:string;
+export interface updatePasswordRequest {
+  oldPassword: string;
+  newPassword: string;
 }
-export interface updatePasswordResponse{
-    message:string;
+export interface updatePasswordResponse {
+  message: string;
 }
 //update avatar (chưa test)
+
+//getUserProfile
+export interface getUserProfileResponse {
+  message: string;
+}
+//googleauthen
+export interface googleAuthenResponse {
+  message: string;
+  user: {
+    id: number;
+    email: string;
+    google_id: string;
+    provider: "google";
+    is_verified: boolean;
+  };
+}
