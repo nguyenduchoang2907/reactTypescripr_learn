@@ -2,7 +2,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Register from "../pages/auth/Register";
 import Login from "../pages/auth/Login";
 import Home from "../pages/Home";
+import Dashboard from "../pages/Dashboard";
 import PrivateRoute from "./PrivateRoute"
+
 
 const AppRoutes = () => {
   return (
@@ -13,7 +15,7 @@ const AppRoutes = () => {
         <Route path="/account/login" element={<Login />} />
 
         <Route element={<PrivateRoute />}>
-          <Route path="/dashboard" element={<h1>Dashboard</h1>} />
+          <Route path="/dashboard" element={<Dashboard/>} />
         </Route>
 
         <Route path="*" element={<h1>404 - Không tìm thấy trang</h1>} />
