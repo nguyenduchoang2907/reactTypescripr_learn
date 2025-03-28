@@ -1,51 +1,52 @@
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { Form, Input, Button, Alert } from "antd";
+import { postLoginRequest } from "../../types/User";
 
-const schema = yup.object({
-  email: yup.string().email("Email không hợp lệ").required("Vui lòng nhập email"),
-  password: yup.string().min(6, "Mật khẩu ít nhất 6 ký tự").required("Vui lòng nhập mật khẩu"),
-});
-
-type LoginFormProps = {
-  onSubmit: (data: { email: string; password: string }) => void;
+interface LoginFormProps {
+  onSubmit: (data: postLoginRequest) => void;
   loading: boolean;
   error: string | null;
-};
+}
 
-const LoginForm = ({ onSubmit, loading, error }: LoginFormProps) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ resolver: yupResolver(schema) });
+const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, loading, error }) => {
+  const [form] = Form.useForm();
+
+  const handleFinish = (values: postLoginRequest) => {
+    onSubmit(values);
+  };
 
   return (
-    <Form onFinish={handleSubmit(onSubmit)} layout="vertical">
-      {error && <Alert message={error} type="error" showIcon className="mb-4" />}
-      
-      <Form.Item 
-        label="Email" 
-        validateStatus={errors.email ? "error" : ""} 
-        help={errors.email?.message}
-      >
-        <Input type="email" {...register("email")} />
-      </Form.Item>
+    <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
+      <h2 className="text-2xl font-semibold text-center text-gray-700">Đăng nhập</h2>
 
-      <Form.Item 
-        label="Mật khẩu" 
-        validateStatus={errors.password ? "error" : ""} 
-        help={errors.password?.message}
-      >
-        <Input.Password {...register("password")} />
-      </Form.Item>
+      {error && <Alert message={error} type="error" className="mb-4" showIcon />}
 
-      <Button type="primary" htmlType="submit" block loading={loading}>
-        Đăng nhập
-      </Button>
-    </Form>
+      <Form form={form} layout="vertical" onFinish={handleFinish}>
+        <Form.Item
+          label="Email"
+          name="email"
+          rules={[
+            { required: true, message: "Vui lòng nhập email" },
+            { type: "email", message: "Email không hợp lệ" },
+          ]}
+        >
+          <Input placeholder="abc@gmail.com" />
+        </Form.Item>
+
+        <Form.Item
+          label="Mật khẩu"
+          name="password"
+          rules={[{ required: true, message: "Vui lòng nhập mật khẩu" }]}
+        >
+          <Input.Password placeholder="••••••••" />
+        </Form.Item>
+
+        <Button type="primary" htmlType="submit" block loading={loading}>
+          Đăng nhập
+        </Button>
+      </Form>
+    </div>
   );
 };
 
 export default LoginForm;
+//tạm ko vấn đề

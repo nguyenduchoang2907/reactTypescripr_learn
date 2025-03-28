@@ -1,28 +1,15 @@
-// import { StrictMode } from 'react'
-// import { createRoot } from 'react-dom/client'
-// import './index.css'
-// import App from './App.tsx'
-
-// createRoot(document.getElementById('root')!).render(
-//   <StrictMode>
-//     <App />
-//   </StrictMode>,
-// )
-
-
-import React from "react";
-import ReactDOM from "react-dom/client";
+import { Suspense } from "react";
+import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import "./index.css"; // Nếu bạn có file CSS chung
-import AppRoutes from "./routes/routes"; 
+import "./css/globals.css";
+import App from "./App.tsx";
+import Spinner from "./pages/spinner/Spinner.tsx";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      {/* <App /> */}
-      <AppRoutes />
-
-    </Provider>
-  </React.StrictMode>
+createRoot(document.getElementById("root")!).render(
+  <Provider store={store}>
+    <Suspense fallback={<Spinner />}>
+      <App />
+    </Suspense>
+  </Provider>
 );
